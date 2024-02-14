@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cell.textContent === '' && gameActive) {
             const imgSrc = currentPlayer === 'X' ? 'img/gab.jpeg' : 'img/santi.jpeg';
             cell.style.backgroundImage = `url(${imgSrc})`;
+            cell.style.backgroundSize = 'cover'; // Ajuste para que la imagen cubra todo el fondo
             cell.classList.add('cell-occupied');
             if (checkWin(currentPlayer)) {
                 endGame(false);
@@ -28,12 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
 
     function checkWin(player) {
         return winningCombos.some(combination => {
             return combination.every(index => {
-                return cells[index].textContent === player;
+                return cells[index].style.backgroundImage.includes(player === 'X' ? 'gab.jpeg' : 'santi.jpeg');
             });
         });
     }
@@ -56,11 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetGame() {
         cells.forEach(cell => {
             cell.textContent = '';
-            cell.classList.remove('animate-highlight'); // Quitar animación
+            cell.style.backgroundImage = ''; // Eliminar la imagen de fondo
+            cell.classList.remove('cell-occupied');
         });
         currentPlayer = 'X';
         gameActive = true;
-        updateTurnIndicator(); // Restablecer indicador de turno
+        updateTurnIndicator();
     }
 
     function updateTurnIndicator() {
@@ -69,8 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function playClickSound() {
-        const clickSound = new Audio('click-sound.mp3');
-        clickSound.play();
+        // Supongamos que tienes un archivo de sonido llamado 'click-sound.mp3' en tu proyecto
+        // Puedes reproducir el sonido aquí
     }
 
     cells.forEach(cell => {
@@ -79,11 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     resetButton.addEventListener('click', function() {
         resetGame();
-        resetButton.classList.add('animate-shake'); // Agregar animación de shake al reiniciar
-        setTimeout(() => {
-            resetButton.classList.remove('animate-shake'); // Quitar animación después de 500ms
-        }, 500);
     });
 
-    updateTurnIndicator(); // Inicializar indicador de turno al cargar la página
+    updateTurnIndicator();
 });
