@@ -12,21 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleCellClick(event) {
         const cell = event.target;
         const cellIndex = parseInt(cell.id.split('-')[1]);
-
+    
         if (cell.textContent === '' && gameActive) {
-            cell.textContent = currentPlayer;
-            cell.classList.add('animate-highlight'); // Agregar animación
+            const imgSrc = currentPlayer === 'X' ? 'img/gab.jpeg' : 'img/santi.jpeg';
+            cell.style.backgroundImage = `url(${imgSrc})`;
+            cell.classList.add('cell-occupied');
             if (checkWin(currentPlayer)) {
                 endGame(false);
             } else if (checkDraw()) {
                 endGame(true);
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                updateTurnIndicator(); // Actualizar indicador de turno
-                playClickSound(); // Reproducir sonido de clic
+                updateTurnIndicator();
+                playClickSound();
             }
         }
     }
+    
 
     function checkWin(player) {
         return winningCombos.some(combination => {
