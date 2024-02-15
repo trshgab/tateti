@@ -20,8 +20,34 @@
             <div class="cell" id="cell-7"></div>
             <div class="cell" id="cell-8"></div>
         </div>
+        <div id="turn-indicator"></div>
         <button id="reset-button">Reiniciar</button>
     </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Selecciona tus personajes y comienza el juego.</p>
+            <label for="player1-character">Jugador 1:</label>
+            <select id="player1-character">
+                <option value="gab">Gab</option>
+                <option value="chicho">Chicho</option>
+                <option value="santi">Santi</option>
+            </select>
+            <label for="player2-character">Jugador 2:</label>
+            <select id="player2-character">
+                <option value="gab">Gab</option>
+                <option value="chicho">Chicho</option>
+                <option value="santi">Santi</option>
+            </select>
+            <button id="start-game">Comenzar</button>
+        </div>
+    </div>
+
+    <!-- Image for Winner -->
+    <img id="winner-image" src="" alt="Ganador" style="display: none;">
+
     <script src="script.js"></script>
 </body>
 </html>

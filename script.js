@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const cells = document.querySelectorAll('.cell');
     const resetButton = document.getElementById('reset-button');
+    const modal = document.getElementById('myModal');
+    const startButton = document.getElementById('start-game');
+    const player1Select = document.getElementById('player1-character');
+    const player2Select = document.getElementById('player2-character');
     let currentPlayer = 'X';
-    let gameActive = true;
+    let gameActive = false;
+    let player1Character = '';
+    let player2Character = '';
     const winningCombos = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
         [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -14,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const cellIndex = parseInt(cell.id.split('-')[1]);
     
         if (cell.textContent === '' && gameActive) {
-            const imgSrc = currentPlayer === 'X' ? 'img/gab.jpeg' : 'img/santi.jpeg';
-            cell.style.backgroundImage = `url(${imgSrc})`;
-            cell.style.backgroundSize = 'cover'; // Ajuste para que la imagen cubra todo el fondo
+            const imgSrc = currentPlayer === 'X' ? player1Character : player2Character;
+            cell.style.backgroundImage = `url(img/${imgSrc}.jpeg)`;
+            cell.style.backgroundSize = 'cover';
             cell.classList.add('cell-occupied');
             if (checkWin(currentPlayer)) {
                 endGame(false);
@@ -33,7 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkWin(player) {
         return winningCombos.some(combination => {
             return combination.every(index => {
-                return cells[index].style.backgroundImage.includes(player === 'X' ? 'gab.jpeg' : 'santi.jpeg');
+                const cell = cells[index];
+                const imgSrc = player === 'X' ? player1Character : player2Character;
+                const backgroundImage = cell.style.backgroundImage;
+                return backgroundImage.includes(`img/${imgSrc}.jpeg`);
             });
         });
     }
@@ -46,9 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function endGame(draw) {
         if (draw) {
-            alert('¡Empate!');
+            showModal('¡Empate!');
         } else {
-            alert('¡Ganó el jugador ' + currentPlayer + '!');
+            const winnerImage = currentPlayer === 'X' ? player1Character : player2Character;
+            document.getElementById('winner-image').src = `img/${winnerImage}.jpeg`;
+            document.getElementById('winner-image').style.display = 'block';
+            showModal(`¡Ganó el jugador ${currentPlayer}!`);
         }
         gameActive = false;
     }
@@ -56,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetGame() {
         cells.forEach(cell => {
             cell.textContent = '';
-            cell.style.backgroundImage = ''; // Eliminar la imagen de fondo
+            cell.style.backgroundImage = '';
             cell.classList.remove('cell-occupied');
         });
         currentPlayer = 'X';
@@ -66,12 +78,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTurnIndicator() {
         const turnIndicator = document.getElementById('turn-indicator');
-        turnIndicator.textContent = 'Turno de: ' + currentPlayer;
+        if (turnIndicator) {
+            turnIndicator.textContent = 'Turno de: ' + currentPlayer;
+        }
     }
 
     function playClickSound() {
-        // Supongamos que tienes un archivo de sonido llamado 'click-sound.mp3' en tu proyecto
-        // Puedes reproducir el sonido aquí
+        // Reproducir sonido de clic
     }
 
     cells.forEach(cell => {
@@ -82,5 +95,39 @@ document.addEventListener('DOMContentLoaded', function() {
         resetGame();
     });
 
+    // Abre el modal al cargar la página
+    modal.style.display = 'block';
+
+    // Cierra el modal cuando se hace clic en la X
+    document.querySelector('.close').addEventListener('click', function() {
+        modal.style.display = 'none';
+        modalContent.removeChild(modalMessage); // Limpiar el mensaje del modal
+        resetGame(); // Reiniciar el juego después de cerrar el modal
+    });
+
+    // Cierra el modal y comienza el juego cuando se hace clic en el botón de comenzar
+    startButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+        player1Character = player1Select.value;
+        player2Character = player2Select.value;
+        gameActive = true;
+        updateTurnIndicator();
+    });
+
     updateTurnIndicator();
 });
+
+function showModal(message) {
+    const modal = document.getElementById('myModal');
+    const modalContent = document.querySelector('.modal-content');
+    const modalMessage = document.createElement('p');
+    modalMessage.textContent = message;
+    modalContent.appendChild(modalMessage);
+    modal.style.display = 'block';
+
+    // Cierra el modal cuando se hace clic en la X
+    document.querySelector('.close').addEventListener('click', function() {
+        modal.style.display = 'none';
+        modalContent.removeChild(modalMessage); // Limpiar el mensaje del modal
+    });
+}
