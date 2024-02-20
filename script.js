@@ -56,7 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showModal('¡Empate!');
         } else {
             const winnerImage = currentPlayer === 'X' ? player1Character : player2Character;
-            showModal(`¡Ganó el jugador ${currentPlayer}!`);
+            // showModal(`¡Ganó el jugador ${currentPlayer}!`);
+            window.location.href = `winner.html?winner=${winnerImage}`;
         }
         gameActive = false;
     }

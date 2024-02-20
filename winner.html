@@ -3,15 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Ganador!</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Winner</title>
+    <style>
+        /* Estilos CSS para dar formato a la página winner.html */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .winner-image {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        #play-again {
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>¡Felicidades!</h1>
-        <p>El ganador es:</p>
-        <img id="winner-image" src="" alt="Ganador">
-        <p><a href="index.html">Volver a jugar</a></p>
-    </div>
+    <h1>Felicidades, ¡has ganado!</h1>
+    <img id="winner-image" class="winner-image" src="" alt="Imagen del ganador">
+    <a id="play-again" href="index.html">Volver a jugar</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener el parámetro de la URL que contiene la ruta de la imagen del ganador
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const winnerImage = `img/${urlParams.get('winner')}.jpeg`;
+
+
+
+            // Asignar la ruta de la imagen del ganador a la etiqueta de imagen
+            const winnerImageElement = document.getElementById('winner-image');
+            winnerImageElement.src = winnerImage;
+        });
+    </script>
 </body>
 </html>
