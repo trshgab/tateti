@@ -47,16 +47,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function checkDraw() {
         return [...cells].every(cell => {
-            return cell.textContent !== '';
+            return cell.classList.contains('cell-occupied');
         });
     }
 
     function endGame(draw) {
         if (draw) {
             showModal('¡Empate!');
+            window.location.href = `play.html`;
         } else {
             const winnerImage = currentPlayer === 'X' ? player1Character : player2Character;
-            // showModal(`¡Ganó el jugador ${currentPlayer}!`);
             window.location.href = `winner.html?winner=${winnerImage}`;
         }
         gameActive = false;
