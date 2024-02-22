@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cell = event.target;
         const cellIndex = parseInt(cell.id.split('-')[1]);
     
-        if (cell.textContent === '' && gameActive) {
+        if (cell.textContent === '' && !cell.classList.contains('cell-occupied') && gameActive) {
             const imgSrc = currentPlayer === 'X' ? player1Character : player2Character;
             cell.style.backgroundImage = `url(img/${imgSrc}.jpeg)`;
             cell.style.backgroundSize = 'cover';
@@ -33,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+    
+    
 
     function checkWin(player) {
         return winningCombos.some(combination => {
