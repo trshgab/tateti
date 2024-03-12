@@ -2,16 +2,22 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: background-image 1s ease; /* Transición suave */
 }
 
 .container {
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: background-image 1s ease; /* Transición suave */
 }
 
 h1 {
@@ -111,3 +117,21 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+select, button {
+    padding: 10px; /* Agregar relleno */
+    border: none; /* Eliminar el borde */
+    border-radius: 5px; /* Agregar borde redondeado */
+    background-color: #fff; /* Color de fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agregar sombra */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Espaciado inferior */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
+select:hover,
+select:focus, button:hover, button:focus {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Cambiar la sombra al pasar el ratón o enfocar */
+    outline: none; /* Eliminar el contorno al enfocar */
+}
+
